@@ -6,7 +6,25 @@
  *  smnaik Sanskruti M Naik
 */
 
-This README illustrates the performance of the gossip-based failure detection scheme for various input cases:
+NODE_FAILURE_DETECTION_USING_GOSSIP_BASED_HEARTBEAT_ALGORITHM
+=============================================================
+
+C++ program p4 with parameters:
+
+1. number of peer nodes N (Total Number of Nodes in the system),
+2. gossip parameter b (Pre-detremined Nodes to send heartbeats to),
+3. gossip parameter c (iterations each node sends randomly chosen b neighbor list entries),
+4. number of seconds after which a node is considered dead F, 
+5. number of bad nodes that should fail B,
+6. number of seconds to wait between failures P, 
+7. the seed of the random number generator S, 
+8. the total number of seconds to run T.
+
+This node failure detection algorithm detects failures of nodes in a distributed system. The program creates a file called "endpoints" in the distributed file system and puts IP address and port number in a line for each node. 
+
+The algorithm checks for changes in the heartbeat values of the nodes.No change in the value of heartbeat sent by the node for F seconds marks node failure.
+
+The following section illustrates the performance of the gossip-based failure detection scheme for various input cases:
 
 Here, we are choosing b different neighbors for every iteration. c is the total number of iterations per node.
 
