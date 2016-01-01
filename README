@@ -1,0 +1,69 @@
+/* Single Author Info:
+ *  Equal Contribution
+ * Group Info:
+ *  abpatwar Aditya B Patwardhan
+ *  savidhal Shiaji A Vidhale
+ *  smnaik Sanskruti M Naik
+*/
+
+This README illustrates the performance of the gossip-based failure detection scheme for various input cases:
+
+Here, we are choosing b different neighbors for every iteration. c is the total number of iterations per node.
+
+CASE 1
+======
+N = 4, b = 1, c = 12, F = 3, B = 2, P = 4, S = 5, T = 18
+
+For this set of inputs, the detection algorithm did not perform reliably.
+Initially, each node had enough neighbors to send gossips to. But, it had to send only to b neighbors. After B nodes failed, each of the remaining two nodes had only one neighbor to gossip.
+
+[abpatwar@eb2-2236-aw09 p4]$ cat list0
+FAIL
+0 7
+1 2
+2 2
+3 2
+
+Only two nodes were suposed to fail. But, the algorithm detected 3 failed nodes. 
+This is because we have only one neighbor i.e b=1. Thus, the gossip does not spread quickly.
+Adding to the trouble, the parameter F is small. This leads to inaccurate prediction of failed nodes.
+
+CASE 2
+======
+N = 4, b = 2, c = 12, F = 3, B = 2, P = 4, S = 5, T = 18
+
+For this set of inputs, the detection algorithm performed well.
+Initially, each node had enough neighbors to send gossips to. After B nodes failed, each of the remaining two nodes had only one neighbor to gossip.
+
+[abpatwar@eb2-2236-aw08 p4]$ cat list3
+OK
+0 6
+1 3
+2 12
+3 12
+
+For this set of inputs, the scheme detected failures with good accuracy. Though the time of failures are not perfect, they are in the range of 0-1 sec from actual failure time.
+
+CASE 3
+======
+N = 4, b = 2, c = 12, F = 3, B = 2, P = 2, S = 5, T = 18
+
+
+[abpatwar@eb2-2236-aw08 p4]$ cat list3
+OK
+0 3
+1 2
+2 12
+3 12
+
+The parameter P is reduced. This parameter is significant w.r.t the spread of gossip. 
+With reduced P, the gossip does not spread well and the detection scheme is activated before every node receives gossips about all other nodes.
+
+Correctness: 
+Correctness is ensured when b is >= N/2.
+This condition keeps sufficient number of neighbors per node and thus a reliable sprea
+
+Fault Tolerance:
+For detecting faults with accuracy, F should be large. Large F compensates the delays in the network.
+Large P ensures that the topology is well discovered and gossips are spread throughout.
+   
